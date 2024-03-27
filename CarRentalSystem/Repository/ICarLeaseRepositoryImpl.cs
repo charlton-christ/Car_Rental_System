@@ -68,11 +68,11 @@ namespace CarRentalSystem.Repository
             Console.WriteLine($"The car is not added");
         }
 
-        public bool UserExists(int userId)
+        public bool CarExists(int carID)
         {
             int count = 0;
-            cmd.CommandText = "Select count(*) as totalcount from [User] where userId=@user_id";
-            cmd.Parameters.AddWithValue("@user_id", userId);
+            cmd.CommandText = "Select count(*) as totalcount from [Vehicle] where vehicle_ID=@carID";
+            cmd.Parameters.AddWithValue("@vehicle_ID", carID);
             connect.Open();
             cmd.Connection = connect;
             SqlDataReader reader = cmd.ExecuteReader();
@@ -84,6 +84,80 @@ namespace CarRentalSystem.Repository
             if (count > 0)
                 return true;
             return false;
+        }
+
+ 	public List<VehicleTable> listAvailableCars()
+        {
+            List<VehicleTable> vehicle = new List<VehicleTable>();
+            cmd.CommandText = "Select * from Vehicle";
+            connect.Open();
+            cmd.Connection = connect;
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                VehicleTable vehicles = new VehicleTable();
+                vehicles.vehicleID = (int)reader["VehicleID"];
+                vehicles.vehicleMake = (string)reader["Vehicle_Make"];
+                vehicles.vehicleModel = (string)reader["Vehicle_Model"];
+                vehicles.vehicleYear = (decimal)reader["Vehicle_Year"];
+                vehicles.vehicleRate = (double)reader["Vehicle_Rate"];
+                vehicles.vehicleStatus = (string)reader["Vehicle_Status"];
+		vehicles.passengerCapacity = (int)reader["Passenger_Capacity"];
+  		vehicles.engineCapacity = (double)reader["Engine_Capacity"];
+                vehicles.Add(vehicle);
+            }
+            connect.Close();
+            return vehicle;
+        }
+
+ 	public List<VehicleTable> listRentedCars()
+        {
+            List<VehicleTable> vehicle = new List<VehicleTable>();
+            cmd.CommandText = "Select * from Vehicle where Vehicle_Status = 'notAvailable'";
+            connect.Open();
+            cmd.Connection = connect;
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                VehicleTable vehicles = new VehicleTable();
+                vehicles.vehicleID = (int)reader["VehicleID"];
+                vehicles.vehicleMake = (string)reader["Vehicle_Make"];
+                vehicles.vehicleModel = (string)reader["Vehicle_Model"];
+                vehicles.vehicleYear = (decimal)reader["Vehicle_Year"];
+                vehicles.vehicleRate = (double)reader["Vehicle_Rate"];
+                vehicles.vehicleStatus = (string)reader["Vehicle_Status"];
+		vehicles.passengerCapacity = (int)reader["Passenger_Capacity"];
+  		vehicles.engineCapacity = (double)reader["Engine_Capacity"];
+                vehicles.Add(vehicle);
+            }
+            connect.Close();
+            return vehicle;
+        }
+
+ 	public List<VehicleTable> findCarByID(int carID)
+        {
+            List<VehicleTable> vehicles = new List<VehicleTable>();
+            cmd.CommandText = "Select * from Vehicle where VehicleID = @carID";
+            cmd.Parameters.AddWithValue("@carID", Vehicle.VehicleID);
+            connect.Open();
+            cmd.Connection = connect;
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                VehicleTable vehicles = new VehicleTable();
+                vehicles.vehicleID = (int)reader["VehicleID"];
+                vehicles.vehicleMake = (string)reader["Vehicle_Make"];
+                vehicles.vehicleModel = (string)reader["Vehicle_Model"];
+                vehicles.vehicleYear = (decimal)reader["Vehicle_Year"];
+                vehicles.vehicleRate = (double)reader["Vehicle_Rate"];
+                vehicles.vehicleStatus = (string)reader["Vehicle_Status"];
+		vehicles.passengerCapacity = (int)reader["Passenger_Capacity"];
+  		vehicles.engineCapacity = (double)reader["Engine_Capacity"];
+                vehicles.Add(vehicle);
+            }
+            connect.Close();
+            cmd.Parameters.Clear();
+            return vehicles;
         }
 
         public bool IfAdminOrNot(int id)
@@ -152,27 +226,7 @@ namespace CarRentalSystem.Repository
             return false;
         }
 
-        public List<Product> getAllProducts()
-        {
-            List<Product> products = new List<Product>();
-            cmd.CommandText = "Select * from Product";
-            connect.Open();
-            cmd.Connection = connect;
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Product product = new Product();
-                product.ProductId = (int)reader["productId"];
-                product.ProductName = (string)reader["productName"];
-                product.Description = (string)reader["description"];
-                product.Price = (decimal)reader["price"];
-                product.QuantityInStock = Convert.IsDBNull(reader["quantityInStock"]) ? null : (int)reader["quantityInStock"];
-                product.Type = (string)reader["type"];
-                products.Add(product);
-            }
-            connect.Close();
-            return products;
-        }
+        
 
         public List<Product> getOrderByUser(User user)
         {
@@ -215,11 +269,7 @@ namespace CarRentalSystem.Repository
                 return true;
             return false;
         }
-        //public void addCar(VehicleTable car)
-        //{
-
-
-        //}
+        
     }
 }
 
