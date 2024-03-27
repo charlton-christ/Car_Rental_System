@@ -44,28 +44,28 @@ namespace CarRentalSystem.Repository
                 connect.Open();
                 cmd.Connection = connect;
                 cmd.CommandText = "Insert into [Vehicle] values (@carID,@carMake,@carModel,@carYear,@carRate,@carStatus,@passengerCapacity,@engineCapacity)";
-                cmd.Parameters.AddWithValue("@carID", user.UserName);
-                cmd.Parameters.AddWithValue("@carMake", user.Password);
-                cmd.Parameters.AddWithValue("@carModel", user.Role);
-                cmd.Parameters.AddWithValue("@carYear", user.Role);
-                cmd.Parameters.AddWithValue("@carRate", user.Role);
-                cmd.Parameters.AddWithValue("@carStatus", user.Role);
-                cmd.Parameters.AddWithValue("@passengerCapacity", user.Role);
+                cmd.Parameters.AddWithValue("@carID", VehicleTable.vehicleID);
+                cmd.Parameters.AddWithValue("@carMake", VehicleTable.vehicleMake);
+                cmd.Parameters.AddWithValue("@carModel", VehicleTable.vehicleModel);
+                cmd.Parameters.AddWithValue("@carYear", VehicleTable.vehicleYear);
+                cmd.Parameters.AddWithValue("@carRate", VehicleTable.vehicleRate);
+                cmd.Parameters.AddWithValue("@carStatus", VehicleTable.vehicleStatus);
+                cmd.Parameters.AddWithValue("@passengerCapacity", VehicleTable.passengerCapacity);
+		cmd.Parameters.AddWithValue("@engineCapacity", VehicleTable.engineCapacity);
                 cmd.ExecuteNonQuery();
                 cmd.Parameters.Clear();
                 connect.Close();
                 connect.Open();
-                cmd.CommandText = "Insert into [Vehicle] values(@userId,@productId)";
-                cmd.Parameters.AddWithValue("@productId", product.ProductId);
-                cmd.Parameters.AddWithValue("@userId", user.UserId);
+                cmd.CommandText = "Insert into [Vehicle] values(@carID)";
+                cmd.Parameters.AddWithValue("@carID", VehicleTable.vehicleID);
                 status = cmd.ExecuteNonQuery();
                 connect.Close();
                 cmd.Parameters.Clear();
                 connect.Close();
             }
             if (status > 0)
-                return true;
-            return false;
+                Console.WriteLine($"The car is added successfully");
+            Console.WriteLine($"The car is not added");
         }
 
         public bool UserExists(int userId)
