@@ -160,45 +160,60 @@ namespace CarRentalSystem.Repository
             return vehicles;
         }
 
-        public bool IfAdminOrNot(int id)
+ 	public List<CustomerTable> listCustomers()
         {
-            string role = "";
-            try
+            List<CustomerTable> customer = new List<CustomerTable>();
+            cmd.CommandText = "Select * from Customer";
+            connect.Open();
+            cmd.Connection = connect;
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
             {
-                cmd.CommandText = "select [role] from [User] where userId = @id";
-                cmd.Parameters.AddWithValue("@id", id);
-                cmd.Connection = connect;
-
-                connect.Open();
-
-                SqlDataReader r = cmd.ExecuteReader();
-                while (r.Read())
-                {
-                    role = (string)r["role"];
-                }
-                if (role.Equals("Admin"))
-                {
-                    return true;
-                }
-
+                CustomerTable customers = new CustomerTable();
+                customers.customerID = (int)reader["CustomerID"];
+                customers.firstName = (string)reader["FirstName"];
+                customers.lastName = (string)reader["LastName"];
+                customers.customerMail = (decimal)reader["CustomerMail"];
+                customers.customerNumber = (double)reader["CustomerNumber"];
+                customers.Add(vehicle);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            return false;
+            connect.Close();
+            return customer;
         }
 
-        public bool createProduct(User user, Product product)
+      public List<CustomerTable> findCustomerByID(int customerID)
+        {
+            List<CustomerTable> customer = new List<CustomerTable>();
+            cmd.CommandText = "Select * from Customer where CutomerID = @customerID";
+            cmd.Parameters.AddWithValue("@customerID", Customer.CustomerID);
+            connect.Open();
+            cmd.Connection = connect;
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                CustomerTable customers = new CustomerTable();
+                customers.customerID = (int)reader["CustomerID"];
+                customers.firstName = (string)reader["FirstName"];
+                customers.lastName = (string)reader["LastName"];
+                customers.customerMail = (decimal)reader["CustomerMail"];
+                customers.customerNumber = (double)reader["CustomerNumber"];
+                customers.Add(vehicle);
+            }
+            connect.Close();
+            cmd.Parameters.Clear();
+            return customer;
+        }
+
+        public void addCustomer(Customer customer)
         {
             int status = 0;
 
-            cmd.CommandText = "Insert into Product values (@name,@desc,@price,@qty,@type)";
-            cmd.Parameters.AddWithValue("@name", product.ProductName);
-            cmd.Parameters.AddWithValue("@desc", product.Description);
-            cmd.Parameters.AddWithValue("@price", product.Price);
-            cmd.Parameters.AddWithValue("@qty", product.QuantityInStock);
-            cmd.Parameters.AddWithValue("@type", product.Type);
+            cmd.CommandText = "Insert into Customer values (@customerID,@firstName,@lastName,@customerMail,@customerNumber)";
+            cmd.Parameters.AddWithValue("@customerID", customer.CustomerID);
+            cmd.Parameters.AddWithValue("@firstName", customer.FirstName);
+            cmd.Parameters.AddWithValue("@lastName", customer.LastName);
+            cmd.Parameters.AddWithValue("@customerMail", customer.CustomerMail);
+            cmd.Parameters.AddWithValue("@customerNumber", customer.CustomerNumber);
             connect.Open();
             cmd.Connection = connect;
             status = cmd.ExecuteNonQuery();
@@ -206,68 +221,8 @@ namespace CarRentalSystem.Repository
             connect.Close();
 
             if (status > 0)
-                return true;
-            return false;
-        }
-
-        public bool createUser(User user)
-        {
-            cmd.CommandText = "Insert into [User] values (@name,@pwd,@role)";
-            cmd.Parameters.AddWithValue("@name", user.UserName);
-            cmd.Parameters.AddWithValue("@pwd", user.Password);
-            cmd.Parameters.AddWithValue("@role", user.Role);
-            connect.Open();
-            cmd.Connection = connect;
-            int status = cmd.ExecuteNonQuery();
-            cmd.Parameters.Clear();
-            connect.Close();
-            if (status > 0)
-                return true;
-            return false;
-        }
-
-        
-
-        public List<Product> getOrderByUser(User user)
-        {
-            List<Product> products = new List<Product>();
-            cmd.CommandText = "Select * from Product p join [Order] o on p.productId=o.productId where o.userId=@userid";
-            cmd.Parameters.AddWithValue("@userid", user.UserId);
-            connect.Open();
-            cmd.Connection = connect;
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Product product = new Product();
-                product.ProductId = (int)reader["productId"];
-                product.ProductName = (string)reader["productName"];
-                product.Description = (string)reader["description"];
-                product.Price = (decimal)reader["price"];
-                product.QuantityInStock = Convert.IsDBNull(reader["quantityInStock"]) ? null : (int)reader["quantityInStock"];
-                product.Type = (string)reader["type"];
-                products.Add(product);
-            }
-            connect.Close();
-            cmd.Parameters.Clear();
-            return products;
-        }
-
-        public bool OrderExists(int orderId)
-        {
-            int count = 0;
-            cmd.CommandText = "Select count(*) as total from [Order] where orderId=@id";
-            cmd.Parameters.AddWithValue("@id", orderId);
-            connect.Open();
-            cmd.Connection = connect;
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                count = (int)reader["total"];
-            }
-            connect.Close();
-            if (count > 0)
-                return true;
-            return false;
+                Console.WriteLine("The Customer is added successfully");
+             Console.WriteLine("The Customer is not added");
         }
         
     }
