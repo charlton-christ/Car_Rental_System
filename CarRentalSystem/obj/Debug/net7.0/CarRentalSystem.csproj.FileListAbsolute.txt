@@ -1,0 +1,5 @@
+/Users/charltonchrist/Projects/CarRentalSystem/CarRentalSystem/obj/Debug/net7.0/CarRentalSystem.csproj.AssemblyReference.cache
+/Users/charltonchrist/Projects/CarRentalSystem/CarRentalSystem/obj/Debug/net7.0/CarRentalSystem.GeneratedMSBuildEditorConfig.editorconfig
+/Users/charltonchrist/Projects/CarRentalSystem/CarRentalSystem/obj/Debug/net7.0/CarRentalSystem.AssemblyInfoInputs.cache
+/Users/charltonchrist/Projects/CarRentalSystem/CarRentalSystem/obj/Debug/net7.0/CarRentalSystem.AssemblyInfo.cs
+/Users/charltonchrist/Projects/CarRentalSystem/CarRentalSystem/obj/Debug/net7.0/CarRentalSystem.csproj.CoreCompileInputs.cache

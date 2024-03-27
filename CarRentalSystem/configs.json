@@ -1,0 +1,5 @@
+﻿{
+  "ConnectionStrings": {
+    "LocalConnectionString": "Server = localhost; DataBase = CAR_RENTAL; Trusted_Connection = True"
+  }
+}

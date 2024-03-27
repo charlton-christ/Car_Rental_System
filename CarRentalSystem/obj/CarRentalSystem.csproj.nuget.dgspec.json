@@ -1,0 +1,75 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/charltonchrist/Projects/CarRentalSystem/CarRentalSystem/CarRentalSystem.csproj": {}
+  },
+  "projects": {
+    "/Users/charltonchrist/Projects/CarRentalSystem/CarRentalSystem/CarRentalSystem.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/charltonchrist/Projects/CarRentalSystem/CarRentalSystem/CarRentalSystem.csproj",
+        "projectName": "CarRentalSystem",
+        "projectPath": "/Users/charltonchrist/Projects/CarRentalSystem/CarRentalSystem/CarRentalSystem.csproj",
+        "packagesPath": "/Users/charltonchrist/.nuget/packages/",
+        "outputPath": "/Users/charltonchrist/Projects/CarRentalSystem/CarRentalSystem/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/charltonchrist/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.FileExtensions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.314/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
